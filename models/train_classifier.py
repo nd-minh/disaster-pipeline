@@ -19,10 +19,11 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.metrics import classification_report
+import pickle
 
 
 def load_data(database_filepath):
-    engine = create_engine(database_filepath)
+    engine = create_engine('sqlite:///' + database_filepath)
     df = pd.read_sql_table('mess',engine)
     X = df.iloc[:,1]
     y = df.iloc[:,4:]
@@ -54,13 +55,13 @@ def build_model():
 
 def evaluate_model(model, X_test, Y_test, category_names):
     y_pred = model.predict(X_test)
-    print(classification_report(y_test, y_pred,target_names=category_names))
+    print(classification_report(Y_test, y_pred,target_names=category_names))
     return
 
 
 def save_model(model, model_filepath):
     with open(model_filepath, 'wb') as model_file:
-    pickle.dump(model, model_file)
+        pickle.dump(model, model_file)
     return
 
 
