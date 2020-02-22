@@ -4,6 +4,14 @@ from sqlalchemy import create_engine
 
 
 def load_data(messages_filepath, categories_filepath):
+    """
+    This function loads the content of messages and categories datafiles into a Pandas Dataframe.
+    Input:
+    - messages_filepath(String): location of messages.csv file
+    - categories_filepath(String): location of categories.csv file
+    Output:
+    - df(Dataframe): messages and categories tables merged on 'id'
+    """
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
     df = messages.merge(categories,on='id')
@@ -11,6 +19,14 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
+    """
+    This function cleans the Dataframe containing messages and categories, 
+    performs some transformation to get it ready for ML pipeline.
+    Input:
+    - df(Dataframe): the Dataframe containing messages and categories
+    Output:
+    - df(Dataframe): the cleaned and transformed Dataframe from input
+    """
     categories = df['categories'].str.split(';',expand=True)
     row = categories.iloc[0,:].copy()
     category_colnames = row.apply(lambda x: x[:-2])
@@ -28,6 +44,12 @@ def clean_data(df):
     return df     
 
 def save_data(df, database_filename):
+    """
+    This function saves the cleaned Dataframe 'df' into a SQLite database file. 
+    Input:
+    - df(Dataframe): the cleaned and transformed Dataframe containing messages and categories
+    - database_filename(String): location to store the database file
+    """
     engine = create_engine('sqlite:///' + database_filename)
     df.to_sql('mess', engine, index=False)
     return
