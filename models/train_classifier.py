@@ -23,6 +23,16 @@ import pickle
 
 
 def load_data(database_filepath):
+    """
+    This function loads the content of messages and categories table
+    from SQLite database into variables X and y.
+    Input:
+    - database_filepath(String): location of the database file
+    Output:
+    - X(Dataframe): input messages
+    - y(Dataframe): message labels
+    - category_names(list): list of category names for messages
+    """
     engine = create_engine('sqlite:///' + database_filepath)
     df = pd.read_sql_table('mess',engine)
     X = df.iloc[:,1]
@@ -32,6 +42,13 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
+    """
+    This function tokenizes the text, lemmatizes it, and change text to lower case.
+    Input:
+    - text(String): input text
+    Output:
+    - clean_tokens(String): tokenized and lemmatized text
+    """
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
 
@@ -44,6 +61,13 @@ def tokenize(text):
 
 
 def build_model():
+    """
+    This function defines a ML pipeline with parameters found using GridSearch.
+    (The GridSearch part is done in the attached Jupyter notebook, since GridSearch
+    takes a long time to run)
+    Output:
+    - pipeline(Pipeline): ML pipeline
+    """
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
         ('tfidf', TfidfTransformer()),
@@ -54,12 +78,27 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    """
+    This function evaluates the ML models using F1 score.
+    Input:
+    - model: a ML model
+    - X_test(Dataframe): the test data
+    - Y_test(Dataframe): the test labels
+    - category_names(list): list of category names for messages
+    """
     y_pred = model.predict(X_test)
     print(classification_report(Y_test, y_pred,target_names=category_names))
     return
 
 
 def save_model(model, model_filepath):
+    """
+    This function saves the trained model inpto a pickle file
+    for production.
+    Input:
+    - model: a ML model
+    - model_filepath: location to save the model
+    """
     with open(model_filepath, 'wb') as model_file:
         pickle.dump(model, model_file)
     return
