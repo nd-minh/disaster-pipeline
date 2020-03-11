@@ -41,6 +41,10 @@ Therefore, we would like to build classifier for the text messages, giving out c
 - Design backend using `Flask`, visualization using `plotly`
 - Design frontend using `Bootstrap`  
 
+Webapp screenshots:
+
+![alt text](/figures/disaster-web1.PNG "mess-labels")
+![alt text](/figures/disaster-web2.PNG "mess-labels")
 
 ### Build Instructions
 In this project folder, `ETL Pipeline Preparation.ipynb` and `ML Pipeline Preparation.ipynb` Jupyter notebooks are for experimenting the steps we will take to build a ETL pipeline to process the data and an ML pipeline to build the classifier. After that, we moves the codes to the python files to run the web app. To run the web app, follow the steps listed below.
