@@ -6,12 +6,12 @@ In this project, we are in a situation when a natural disaster has just happened
 ### Dataset Description
 The dataset we use in this project is released by Figure Eight and is available [online](https://www.figure-eight.com/dataset/combined-disaster-response-data/). The dataset contains 30,000 messages drawn from events including an earthquake in Haiti in 2010, an earthquake in Chile in 2010, floods in Pakistan in 2010, super-storm Sandy in the U.S.A. in 2012, and news articles spanning a large number of years and 100s of different disasters. A screenshot of the messages in the dataset is given below.
 
-![alt text](/figures/disaster-mess.png "mess")
+![alt text](/figures/disaster-mess.PNG "mess")
 
 Each message is tagged with a the categories it belongs to. We have 36 categories in total.
 Example:
 
-![alt text](/figures/disaster-mess-labels.png "mess-labels")
+![alt text](/figures/disaster-mess-labels.PNG "mess-labels")
 
 For a complete list of message labels, you can refer to the notebook `ETL Pipeline Preparation.ipynb`. The messages and their labels are available in `data/disaster_messages.csv` and `data/disaster_categories.csv`, respectively.
 
